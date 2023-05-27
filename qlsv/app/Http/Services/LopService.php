@@ -23,4 +23,24 @@ class LopService
         }
         return true;
     }
+    public function getAll(){
+        //return Lopmonhoc::get();
+        return Lopmonhoc::paginate(1);
+    }
+    public function edit($lop,$request){
+        try {
+            $lop->malop = $request->input('malop');
+            $lop->tenlop = $request->input('tenlop');
+            $lop->mota = $request->input('mota');
+            $lop->soluongsv = $request->input('soluongsv');
+            $lop->save();
+            Session()->flash('success','Cập nhật thông tin lớp học thành công');
+
+        }
+        catch (Exception $ex){
+            Session()->flash('error','Cập nhật thông tin lớp học KHÔNG thành công');
+            return false;
+        }
+        return true;
+    }
 }

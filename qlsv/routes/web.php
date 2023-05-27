@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('lop')->group(function () {
             Route::get('add',[LopmonhocController::class,'create']);
             Route::post('add',[LopmonhocController::class,'postcreate']);
+            Route::get('list',[LopmonhocController::class,'list']);
+            Route::get('edit/{lop}',[LopmonhocController::class,'edit']);
+            Route::post('edit/{lop}',[LopmonhocController::class,'postedit']);
         });
     });
 });
