@@ -18,6 +18,11 @@ class LoginController extends Controller
         //xử lý việc đăng nhập
         //echo "xử lý login";
         //dd($request->input());
+        $this->validate($request,[
+            'email'=>'required|email:filter',
+            'password'=>'required'
+        ]);
+
         if(Auth::attempt([
             'email'=>$request->input('email'),
             'password'=>$request->input('password'),
@@ -25,6 +30,7 @@ class LoginController extends Controller
         {
             return redirect()->route('admin');
         }
+        Session()->flash('error','Email hoặc mật khẩu không chính xác');
         return redirect()->back();
     }
 }

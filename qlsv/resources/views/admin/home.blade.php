@@ -1,1 +1,4 @@
-Bạn đã đăng nhập thành công. Đây trang trang Admin
+@extends('admin.main')
+@section('content')
+    Đây là trang chủ admin
+@endsection

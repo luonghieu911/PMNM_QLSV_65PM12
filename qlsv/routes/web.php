@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Middleware\Authenticate;
+use \App\Http\Controllers\Admin\LopmonhocController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +19,17 @@ use App\Http\Controllers\Admin\MainController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('admin/login',[LoginController::class,'index']);
+Route::get('admin/login',[LoginController::class,'index'])->name('login');
 Route::post('admin/login/store',[LoginController::class,'login']);
-Route::get('admin/home',[MainController::class,'index'])->name('admin');
+
+Route::middleware(['auth'])->group(function () {
+    // ...
+    Route::prefix('admin')->group(function () {
+        Route::get('home',[MainController::class,'index'])->name('admin');
+        Route::prefix('lop')->group(function () {
+            Route::get('add',[LopmonhocController::class,'create']);
+            Route::post('add',[LopmonhocController::class,'postcreate']);
+        });
+    });
+});
 
