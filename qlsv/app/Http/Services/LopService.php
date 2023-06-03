@@ -43,4 +43,13 @@ class LopService
         }
         return true;
     }
+    public function delete($request){
+        //
+        $lop = Lopmonhoc::Where('id',$request->input('id')).first();
+        if($lop){
+           $lop->delete();
+           return true;
+        }
+        return false;
+    }
 }

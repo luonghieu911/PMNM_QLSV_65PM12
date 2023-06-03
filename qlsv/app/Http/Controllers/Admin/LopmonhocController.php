@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLopMHRequest;
 use App\Http\Services\LopService;
 use App\Models\Lopmonhoc;
+use http\Env\Request;
 
 
 class LopmonhocController extends Controller
@@ -27,6 +28,7 @@ class LopmonhocController extends Controller
         $result = $this->lopService->create($request);
         return redirect()->back();
     }
+
     public function list(){
         $lops = $this->lopService->getAll();
         return view('admin.lop.list',[
@@ -43,5 +45,18 @@ class LopmonhocController extends Controller
     public function postedit(Lopmonhoc $lop, CreateLopMHRequest $request){
        $result = $this->lopService->edit($lop,$request);
        return redirect()->back();
+    }
+    public function delete(Request $request){
+        $result = $this->lopService->delete($request);
+        if($result){
+            return respone()->json([
+            'error'=>'false',
+            'message'=>'Xóa lớp học thành công'
+        ]);
+        }
+        return response()->json([
+           'error'=>'true'
+        ]);
+
     }
 }
